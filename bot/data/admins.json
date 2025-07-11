@@ -1,1 +1,8 @@
-
+[
+  {
+    "id": 123456789,
+    "name": "AdminOne",
+    "access_level": "full",
+    "servers": [1, 2]
+  }
+]
