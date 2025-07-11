@@ -1,1 +1,29 @@
+name: Deploy Aylar-xui Bot
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to Server
+      run: |
+        ssh -o StrictHostKeyChecking=no user@your.server.ip << 'EOF'
+          cd /opt/aylar-xui
+          git pull origin main
+          # نصب وابستگی‌ها اگر لازمه:
+          # pip install -r requirements.txt
+          sudo systemctl restart aylar-xui.service
+        EOF
