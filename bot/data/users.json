@@ -1,0 +1,19 @@
+[
+  {
+    "id": 2233445566,
+    "name": "AliReza",
+    "configs": [
+      {
+        "server_id": 1,
+        "inbound_port": 2053,
+        "username": "alireza1",
+        "expiry": "2025-08-01",
+        "data_limit_gb": 20,
+        "used_gb": 5
+      }
+    ],
+    "wallet_balance": 0,
+    "purchases": [],
+    "active": true
+  }
+]
