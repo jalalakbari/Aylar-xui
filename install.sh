@@ -2,23 +2,31 @@
 
 set -e
 
-echo "بروزرسانی لیست پکیج‌ها و نصب پیش‌نیازها..."
-apt update && apt install -y python3 python3-pip git curl
+# به‌روزرسانی و نصب پیش‌نیازها
+apt update
+apt install -y python3 python3-pip git curl
 
-echo "کلون کردن پروژه از گیت‌هاب..."
-rm -rf /opt/aylar-xui
+# حذف پوشه قبلی در صورت وجود
+if [ -d "/opt/aylar-xui" ]; then
+  rm -rf /opt/aylar-xui
+fi
+
+# کلون کردن ریپازیتوری
 git clone https://github.com/jalalakbari/Aylar-xui.git /opt/aylar-xui
 
-echo "نصب کتابخانه‌های پایتون..."
-pip3 install --no-cache-dir -r /opt/aylar-xui/bot/requirements.txt
+# ورود به پوشه بات
+cd /opt/aylar-xui/bot
 
-echo "لطفا اطلاعات زیر را وارد کنید:"
-read -p "توکن ربات (BOT_TOKEN): " BOT_TOKEN
-read -p "آی‌دی مالک/ادمین (ADMIN_ID): " ADMIN_ID
-read -p "ساب‌دامین پنل (PANEL_SUBDOMAIN): " PANEL_SUBDOMAIN
+# نصب وابستگی‌ها
+pip3 install -r requirements.txt
 
-echo "ساخت فایل کانفیگ config.json ..."
-cat <<EOF > /opt/aylar-xui/bot/config.json
+# گرفتن ورودی کاربر
+read -p "توکن ربات را وارد کنید: " BOT_TOKEN
+read -p "ایدی عددی ادمین را وارد کنید: " ADMIN_ID
+read -p "ساب‌دامین پنل را وارد کنید: " PANEL_SUBDOMAIN
+
+# ایجاد فایل کانفیگ
+cat <<EOF > config.json
 {
   "bot_token": "$BOT_TOKEN",
   "admin_id": $ADMIN_ID,
@@ -26,7 +34,7 @@ cat <<EOF > /opt/aylar-xui/bot/config.json
 }
 EOF
 
-echo "ایجاد سرویس systemd برای ربات..."
+# ایجاد سرویس systemd برای اجرای ربات
 cat <<EOF > /etc/systemd/system/aylar-xui.service
 [Unit]
 Description=Aylar-xui Telegram Bot
@@ -42,14 +50,9 @@ Restart=always
 WantedBy=multi-user.target
 EOF
 
-echo "بارگذاری مجدد سرویس‌ها..."
+# بارگذاری مجدد systemd، فعال و استارت سرویس
 systemctl daemon-reload
-
-echo "فعال‌سازی سرویس aylar-xui..."
 systemctl enable aylar-xui.service
-
-echo "راه‌اندازی سرویس aylar-xui..."
 systemctl start aylar-xui.service
 
-echo "نصب با موفقیت انجام شد!"
-echo "برای مشاهده وضعیت سرویس: sudo systemctl status aylar-xui"
+echo "نصب و راه‌اندازی ربات با موفقیت انجام شد."
