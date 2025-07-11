@@ -1,0 +1,11 @@
+{
+  "bot_token": "توکن ربات اینجا",
+  "owner_id": 123456789,
+  "card_number": "6037991234567890",
+  "wallet_enabled": true,
+  "update_repo_url": "https://github.com/jalalakbari/Aylar-xui",
+  "ssl_auto": true,
+  "notif_percent": 10,
+  "support_link": "t.me/broken_1995",
+  "check_update_on_startup": true
+}
