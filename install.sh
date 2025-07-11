@@ -1,6 +1,4 @@
 #!/bin/bash
-set -e
-
 apt update
 apt install -y curl python3 python3-pip git
 
