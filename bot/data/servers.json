@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "name": "سرور تهران",
+    "ip": "185.73.113.73",
+    "port": 54321,
+    "domain": "sub.domain.com",
+    "ssl_enabled": true,
+    "panel_port": 2096,
+    "username": "admin",
+    "password": "password"
+  }
+]
